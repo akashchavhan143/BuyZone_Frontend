@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 // import CategoryNavigator from "../CategoryComponent/CategoryNavigator";
 
 const ProductCard = (product) => {
+  const [isLiked, setIsLiked] = useState(false);
   const descriptionToShow = (description, maxLength) => {
     if (description.length <= maxLength) {
       return description;
@@ -43,18 +45,38 @@ const ProductCard = (product) => {
             alt={product.title}
           />
 
-          {/* Like button on the left */}
-          <Link className="btn  like-btn position-absolute top-0 start-0 m-2">
-            <i className="far fa-heart"></i> Like
-          </Link>
+          {/* Action buttons */}
+          <div className="position-absolute top-0 start-0 end-0 d-flex justify-content-between p-2">
+            {/* Like button */}
+            <button 
+              onClick={() => setIsLiked(!isLiked)}
+              className={`btn ${isLiked ? 'btn-danger' : 'btn-outline-danger'}`}
+              style={{
+                borderRadius: '20px',
+                fontSize: '12px',
+                padding: '5px 10px',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <i className={`${isLiked ? 'fas' : 'far'} fa-heart`}></i>
+              <span className="d-none d-sm-inline ms-1">{isLiked ? 'Liked' : 'Like'}</span>
+            </button>
 
-          {/* Share button on the right */}
-          <button
-            onClick={() => handleShare(product)}
-            className="btn  share-btn position-absolute  top-0 end-0 m-2"
-          >
-            <i className="fas fa-share"></i> Share
-          </button>
+            {/* Share button */}
+            <button
+              onClick={() => handleShare(product)}
+              className="btn btn-outline-primary"
+              style={{
+                borderRadius: '20px',
+                fontSize: '12px',
+                padding: '5px 10px',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <i className="fas fa-share"></i>
+              <span className="d-none d-sm-inline ms-1">Share</span>
+            </button>
+          </div>
         </div>
         <div className="  ">
           <h5 className="card-title text-uppercase text-truncate-3-lines">
